@@ -1,5 +1,6 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns='http://www.w3.org/1999/xhtml'>
+
 <head>
     <!--
         Copyright 2016 Esri
@@ -22,25 +23,28 @@
     <meta name='author' content='Esri' />
     <meta name='keywords' content='solar, eclipse, penumbra, umbra' />
     <meta name='description' content='Mapping and charting 905 solar eclipses from 1601 to 2200' />
-    <link type='text/css' rel='stylesheet' href='//fonts.googleapis.com/css?family=Roboto:400,700|Berkshire+Swash:400' />
-    <link type='text/css' rel='stylesheet' href='//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css' />
-    <link type='text/css' rel='stylesheet' href='//js.arcgis.com/4.1/esri/css/main.css'>
+    <link type='text/css' rel='stylesheet'
+        href='//fonts.googleapis.com/css?family=Roboto:400,700|Berkshire+Swash:400' />
+    <link type='text/css' rel='stylesheet'
+        href='//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css' />
+    <link type='text/css' rel='stylesheet' href='//js.arcgis.com/4.24/esri/css/main.css'>
     <link type='text/css' rel='stylesheet' href='index.css'>
     <script type='text/javascript' src='js/jquery-3.1.1.min.js'></script>
     <script type='text/javascript' src='js/d3.min.js'></script>
-    <script type='text/javascript' src='//js.arcgis.com/4.1/'></script>
+    <script type='text/javascript' src='//js.arcgis.com/4.24/'></script>
     <script type='text/javascript' src='index.js'></script>
     <script>
         (function (i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
                 (i[r].q = i[r].q || []).push(arguments)
             }, i[r].l = 1 * new Date(); a = s.createElement(o),
-            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
         })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
         ga('create', 'UA-10866840-28', 'auto');
         ga('send', 'pageview');
     </script>
 </head>
+
 <body>
     <div id='map'>
         <div id='basemapToggle'></div>
@@ -49,23 +53,57 @@
         <img id='logo' src='img/esri-small.png' />
         <div id='heading'>Solar Eclipse Map</div>
         <div id='buttons'>
-            <div id='button-help' class='button'><i class='fa fa-question fa-2x'></i></div><div id='button-about' class='button'><i class='fa fa-info fa-2x'></i></div>
+            <div id='button-help' class='button'><i class='fa fa-question fa-2x'></i></div>
+            <div id='button-about' class='button'><i class='fa fa-info fa-2x'></i></div>
         </div>
     </div>
     <div id='panel'>
         <div id='panel-title'>Total Solar Eclipse</div>
         <div id='panel-content'>
-            <div><div class='heading'>Date</div><div class='value'></div></div>
-            <div><div class='heading'>Time</div><div class='value'>‎</div></div>
-            <div><div class='heading'>Duration</div><div class='value'>‎</div></div>
-            <div><div class='heading'>Width</div><div class='value'></div></div>
-            <div><div class='heading'>Magnitude</div><div class='value'>‎</div></div>
-            <div><div class='heading'>Sun Altitude</div><div class='value'>‎</div></div>
-            <div><div class='heading'>Sun Azimuth</div><div class='value'></div></div>
-            <div><div class='heading'>Lunation</div><div class='value'></div></div>
-            <div><div class='heading'>Saros Cycle</div><div class='value'></div></div>
-            <div><div class='heading'>Gamma</div><div class='value'></div></div>
-            <div><div class='heading'>Delta-T</div><div class='value'>‎</div></div>
+            <div>
+                <div class='heading'>Date</div>
+                <div class='value'></div>
+            </div>
+            <div>
+                <div class='heading'>Time</div>
+                <div class='value'>‎</div>
+            </div>
+            <div>
+                <div class='heading'>Duration</div>
+                <div class='value'>‎</div>
+            </div>
+            <div>
+                <div class='heading'>Width</div>
+                <div class='value'></div>
+            </div>
+            <div>
+                <div class='heading'>Magnitude</div>
+                <div class='value'>‎</div>
+            </div>
+            <div>
+                <div class='heading'>Sun Altitude</div>
+                <div class='value'>‎</div>
+            </div>
+            <div>
+                <div class='heading'>Sun Azimuth</div>
+                <div class='value'></div>
+            </div>
+            <div>
+                <div class='heading'>Lunation</div>
+                <div class='value'></div>
+            </div>
+            <div>
+                <div class='heading'>Saros Cycle</div>
+                <div class='value'></div>
+            </div>
+            <div>
+                <div class='heading'>Gamma</div>
+                <div class='value'></div>
+            </div>
+            <div>
+                <div class='heading'>Delta-T</div>
+                <div class='value'>‎</div>
+            </div>
         </div>
     </div>
     <div id='chart'></div>
@@ -73,9 +111,18 @@
         <div class='dialog-window'>
             <div class='dialog-banner'>Using Solar Eclipse Map</div>
             <div class='dialog-description'>
-                <p>This application displays all <a href='https://en.wikipedia.org/wiki/Solar_eclipse'>solar eclipses</a> from 1601 to 2200. This application may take a few seconds to load but once it does you will see a chart at the bottom of the screen and a striped globe in the center. The chart contains 905 dots, one dot per eclipse, distributed over a time scale from 1601 to 2200. The thick red vertical line on the chart is a moveable "time window", only those dots (or eclipses) that fall inside the window will be rendered on the globe. The time window can be moved side-to-side to render historic and future exclipse. The time window is 10 years wide.</p>
-                <p>Moving your mouse over any eclipse in the chart will temporary add the eclipse to the globe. The eclipse path will be colored cyan.</p>
-                <p>Similarly, moving your mouse over paths on the globe will highligh the eclipse's entry in the chart. Clicking on an eclipse path will launch a popup window with detailed information about the eclipse.</p>
+                <p>This application displays all <a href='https://en.wikipedia.org/wiki/Solar_eclipse'>solar
+                        eclipses</a> from 1601 to 2200. This application may take a few seconds to load but once it does
+                    you will see a chart at the bottom of the screen and a striped globe in the center. The chart
+                    contains 905 dots, one dot per eclipse, distributed over a time scale from 1601 to 2200. The thick
+                    red vertical line on the chart is a moveable "time window", only those dots (or eclipses) that fall
+                    inside the window will be rendered on the globe. The time window can be moved side-to-side to render
+                    historic and future exclipse. The time window is 10 years wide.</p>
+                <p>Moving your mouse over any eclipse in the chart will temporary add the eclipse to the globe. The
+                    eclipse path will be colored cyan.</p>
+                <p>Similarly, moving your mouse over paths on the globe will highligh the eclipse's entry in the chart.
+                    Clicking on an eclipse path will launch a popup window with detailed information about the eclipse.
+                </p>
             </div>
             <div class='dialog-buttons'>
                 <div class='dialog-button close'>Close</div>
@@ -86,16 +133,29 @@
         <div class='dialog-window'>
             <div class='dialog-banner'>About Solar Eclipse Map</div>
             <div class='dialog-description'>
-                <p>This application was designed and developed by <a href='https://www.esri.com'>Esri</a>'s <a href='https://blogs.esri.com/esri/apl/'>Applications Prototype Lab</a> in Redlands, California. The application was built using the following technologies:</p>
+                <p>This application was designed and developed by <a href='https://www.esri.com'>Esri</a>'s <a
+                        href='https://blogs.esri.com/esri/apl/'>Applications Prototype Lab</a> in Redlands, California.
+                    The application was built using the following technologies:</p>
                 <ul>
-                    <li><a href='https://developers.arcgis.com/javascript/'>ArcGIS API for JavaScript</a> (<a href='https://developers.arcgis.com/javascript/beta/'>beta</a>) by Esri</li>
-                    <li><a href='https://d3js.org/'>D3.js</a> by <a href='https://bost.ocks.org/mike/'>Mike Bostock</a></li>
-                    <li><a href='https://fortawesome.github.io/Font-Awesome/'>Font Awesome</a> by <a href='https://twitter.com/davegandy'>Dave Gandy</a></li>
-                    <li><a href='https://www.google.com/fonts'>Google Fonts</a>, specifically <a href='https://www.google.com/fonts/specimen/Roboto'>Roboto</a> and <a href='https://www.google.com/fonts/specimen/Berkshire+Swash'>Berkshire Swash</a></li>
+                    <li><a href='https://developers.arcgis.com/javascript/'>ArcGIS API for JavaScript</a> (<a
+                            href='https://developers.arcgis.com/javascript/beta/'>beta</a>) by Esri</li>
+                    <li><a href='https://d3js.org/'>D3.js</a> by <a href='https://bost.ocks.org/mike/'>Mike Bostock</a>
+                    </li>
+                    <li><a href='https://fortawesome.github.io/Font-Awesome/'>Font Awesome</a> by <a
+                            href='https://twitter.com/davegandy'>Dave Gandy</a></li>
+                    <li><a href='https://www.google.com/fonts'>Google Fonts</a>, specifically <a
+                            href='https://www.google.com/fonts/specimen/Roboto'>Roboto</a> and <a
+                            href='https://www.google.com/fonts/specimen/Berkshire+Swash'>Berkshire Swash</a></li>
                     <li><a href='https://jquery.com/'>jQuery</a> by the jQuery Foundation Inc.</li>
                 </ul>
-                <p>Eclipse paths were generated by <a href='https://eclipse-maps.com/Eclipse-Maps/Welcome.html'>Michael Zeiler</a> from data courtesy of <a href='https://xjubier.free.fr/'>Xavier Jubier</a>. The data is published <a href='https://www.arcgis.com/home/item.html?id=4122edbbe49a4f50bee6bf83548d7e9e'>here</a> as a hosted feature service on <a href='https://www.arcgis.com'>ArcGIS Online</a>. The data contains 905 solar eclipses from 1601 to 2200.</p>
-                <p>Souce code for this application can be downloaded <a href='https://github.com/richiecarmichael/Esri-Solar-Eclipse-Map'>here</a>.</p>
+                <p>Eclipse paths were generated by <a href='https://eclipse-maps.com/Eclipse-Maps/Welcome.html'>Michael
+                        Zeiler</a> from data courtesy of <a href='https://xjubier.free.fr/'>Xavier Jubier</a>. The data
+                    is published <a
+                        href='https://www.arcgis.com/home/item.html?id=4122edbbe49a4f50bee6bf83548d7e9e'>here</a> as a
+                    hosted feature service on <a href='https://www.arcgis.com'>ArcGIS Online</a>. The data contains 905
+                    solar eclipses from 1601 to 2200.</p>
+                <p>Souce code for this application can be downloaded <a
+                        href='https://github.com/richiecarmichael/Esri-Solar-Eclipse-Map'>here</a>.</p>
             </div>
             <div class='dialog-buttons'>
                 <div class='dialog-button close'>Close</div>
@@ -109,4 +169,5 @@
         </div>
     </div>
 </body>
+
 </html>
