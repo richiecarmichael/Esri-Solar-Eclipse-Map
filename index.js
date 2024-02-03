@@ -27,6 +27,7 @@ require([
   "esri/widgets/BasemapToggle",
   "esri/widgets/BasemapToggle/BasemapToggleViewModel",
   "esri/views/SceneView",
+  "esri/renderers/UniqueValueRenderer",
   "dojo/domReady!",
 ], function (
   Map,
@@ -40,7 +41,8 @@ require([
   query,
   BasemapToggle,
   BasemapToggleViewModel,
-  SceneView
+  SceneView,
+  UniqueValueRenderer
 ) {
   $(document).ready(function () {
     // Enforce strict mode
@@ -48,12 +50,14 @@ require([
 
     // Application constants
     var SOLAR =
-      "https://services.arcgis.com/6DIQcwlPy8knb6sg/arcgis/rest/services/SolarEclipsePath/FeatureServer/0";
+      "https://services.arcgis.com/nzS0F0zdNLvs7nc8/arcgis/rest/services/EclipsePolygons_1601_2200/FeatureServer/18";
+    //"https://services.arcgis.com/6DIQcwlPy8knb6sg/arcgis/rest/services/SolarEclipsePath/FeatureServer/0";
+
     var GEOMETRYPRECISION = 2;
     var MAXALLOWABLEOFFSET = 0.1;
     var DATE_MIN = 1600;
     var DATE_MAX = 2200;
-    var DATE_STA = 2016;
+    var DATE_STA = 2023;
     var DURATION_MIN = 0;
     var DURATION_MAX = 800;
     var POINTER_WIDTH = 10; // years
@@ -76,7 +80,7 @@ require([
         right: 0,
         bottom: 200,
       },
-      center: [40, 22], // Center the globe around Europe
+      center: [-90, 12], // Center the globe around Europe
       environment: {
         // Disable lighting and stars
         lighting: {
@@ -100,6 +104,31 @@ require([
             elevationInfo: {
               mode: "on-the-ground",
             },
+            /*            renderer: new UniqueValueRenderer({
+              type: "unique-value",  // autocasts as new UniqueValueRenderer()
+              field: "EclType_simple",
+              defaultSymbol: { type: "simple-fill" },  // autocasts as new SimpleFillSymbol()
+              uniqueValueInfos: [{
+                value: "Total",
+                symbol: {
+                  type: "simple-fill",  // autocasts as new SimpleFillSymbol()
+                  color: "red"
+                }
+              }, {
+                value: "Hybrid",
+                symbol: {
+                  type: "simple-fill",  // autocasts as new SimpleFillSymbol()
+                  color: "orange"
+                }
+              }, {
+                value: "Annular",
+                symbol: {
+                  type: "simple-fill",  // autocasts as new SimpleFillSymbol()
+                  color: "blue"
+                }
+              }]
+            })
+*/
             renderer: new SimpleRenderer({
               symbol: new PolygonSymbol3D({
                 symbolLayers: [
@@ -627,11 +656,68 @@ require([
         case "A":
           $("#panel-title").html("Annular Solar Eclipse");
           break;
+        case "An":
+          $("#panel-title").html("Annular Solar Eclipse (no northern limit)");
+          break;
+        case "As":
+          $("#panel-title").html("Annular Solar Eclipse (no southern limit)");
+          break;
+        case "A+":
+          $("#panel-title").html(
+            "Annular Solar Eclipse (no northern limit and no central line)"
+          );
+          break;
+        case "A-":
+          $("#panel-title").html(
+            "Annular Solar Eclipse (no southern limit and no central line)"
+          );
+          break;
+        case "Am":
+          $("#panel-title").html(
+            "Annular Solar Eclipse (middle eclipse of Saros)"
+          );
+          break;
         case "H":
-          $("#panel-title").html("Hybrid Solar Eclipse");
+          $("#panel-title").html("Hybrid Solar Eclipse (total-annular-total)");
+          break;
+        case "H2":
+          $("#panel-title").html(
+            "Hybrid Solar Eclipse (begins total, ends annular)"
+          );
+          break;
+        case "H3":
+          $("#panel-title").html(
+            "Hybrid Solar Eclipse (begins annular, ends total)"
+          );
+          break;
+        case "Hm":
+          $("#panel-title").html(
+            "Hybrid Solar Eclipse (middle eclipse of Saros)"
+          );
           break;
         case "T":
           $("#panel-title").html("Total Solar Eclipse");
+          break;
+        case "Tn":
+          $("#panel-title").html("Total Solar Eclipse (no northern limit)");
+          break;
+        case "Ts":
+          $("#panel-title").html("Total Solar Eclipse (no southern limit)");
+          break;
+        case "T+":
+          $("#panel-title").html(
+            "Total Solar Eclipse (no northern limit and no central line)"
+          );
+          break;
+        case "T-":
+          $("#panel-title").html(
+            "Total Solar Eclipse (no southern limit and no central line)"
+          );
+          break;
+        case "Tm":
+          $("#panel-title").html(
+            "Total Solar Eclipse (middle eclipse of Saros)"
+          );
           break;
         default:
           $("#panel-title").html("Solar Eclipse");
